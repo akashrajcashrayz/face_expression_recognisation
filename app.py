@@ -55,7 +55,6 @@ def test_connect():
 def index():
     """Video streaming home page."""
     return render_template('index.html')
-cap = cv2.VideoCapture(0)
 def gen():
     while True:
         # Find haar cascade to draw bounding box around face
@@ -86,11 +85,8 @@ def gen():
         frame = buffer.tobytes()
         yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n') 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
 
-    cap.release()
-    cv2.destroyAllWindows()
+
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
